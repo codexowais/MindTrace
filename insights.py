@@ -39,4 +39,9 @@ def generate_insights():
     if insights["Average Screen Time (hrs)"] > 8:
         warnings.append("High screen-time trend detected")
 
+    if sleep >= 7 and stress <= 6 and screen_time <= 6 and good_mood:
+    print("\n✅ Everything looks good.")
+    print("You're doing well. Nothing to worry about today 🌿")
+    
+
     return insights, warnings
