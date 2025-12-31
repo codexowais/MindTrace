@@ -21,25 +21,35 @@ def generate_insights():
     stress = [int(row["stress_level"]) for row in data]
     screen = [float(row["screen_time"]) for row in data]
 
+    avg_mood = average(moods)
+    avg_sleep = average(sleep)
+    avg_stress = average(stress)
+    avg_screen = average(screen)
+
     insights = {
-        "Average Mood": average(moods),
-        "Average Sleep (hrs)": average(sleep),
-        "Average Stress": average(stress),
-        "Average Screen Time (hrs)": average(screen)
+        "Average Mood": avg_mood,
+        "Average Sleep (hrs)": avg_sleep,
+        "Average Stress": avg_stress,
+        "Average Screen Time (hrs)": avg_screen
     }
 
     warnings = []
 
-    if insights["Average Sleep (hrs)"] < 6:
+    # Existing warnings
+    if avg_sleep < 6:
         warnings.append("Low sleep trend detected")
 
-    if insights["Average Stress"] > 7:
+    if avg_stress > 7:
         warnings.append("High stress trend detected")
 
-    if insights["Average Screen Time (hrs)"] > 8:
+    if avg_screen > 8:
         warnings.append("High screen-time trend detected")
 
-    if sleep >= 7 and stress <= 6 and screen_time <= 6 and good_mood:
+    if avg_mood < 6:
+        warnings.append("Low mood trend detected")
+
+    # ✅ Positive reassurance condition
+    if avg_mood >= 7 and avg_sleep >= 7 and avg_stress <= 6 and avg_screen <= 6:
         print("\n✅ Everything looks good.")
         print("You're doing well. Nothing to worry about today 🌿")
 
